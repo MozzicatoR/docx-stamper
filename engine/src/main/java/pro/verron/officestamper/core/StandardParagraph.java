@@ -87,7 +87,7 @@ public class StandardParagraph
 
     @Override public ProcessorContext processorContext(Placeholder placeholder) {
         var comment = comment(placeholder);
-        var firstRun = (R) contents.getFirst();
+        var firstRun = (R) contents.get(0);
         return new ProcessorContext(this, firstRun, comment, placeholder);
     }
 
@@ -132,10 +132,12 @@ public class StandardParagraph
      * @param replacement the object to replace the expression.
      */
     @Override public void replace(Placeholder placeholder, Object replacement) {
-        switch (replacement) {
-            case R run -> replaceWithRun(placeholder, run);
-            case Br br -> replaceWithBr(placeholder, br);
-            default -> throw new AssertionError("Replacement must be a R or Br, but was a " + replacement.getClass());
+        if (replacement instanceof R run) {
+            replaceWithRun(placeholder, run);
+        } else if (replacement instanceof Br br) {
+            replaceWithBr(placeholder, br);
+        } else {
+            throw new AssertionError("Replacement must be a R or Br, but was a " + replacement.getClass());
         }
     }
 
@@ -179,7 +181,7 @@ public class StandardParagraph
         boolean singleRun = affectedRuns.size() == 1;
 
         if (singleRun) {
-            IndexedRun run = affectedRuns.getFirst();
+            IndexedRun run = affectedRuns.get(0);
 
             boolean expressionSpansCompleteRun = full.length() == run.length();
             boolean expressionAtStartOfRun = matchStartIndex == run.startIndex();
@@ -213,8 +215,8 @@ public class StandardParagraph
             }
         }
         else {
-            IndexedRun firstRun = affectedRuns.getFirst();
-            IndexedRun lastRun = affectedRuns.getLast();
+            IndexedRun firstRun = affectedRuns.get(0);
+            IndexedRun lastRun = affectedRuns.get(affectedRuns.size() - 1);
             replacement.setRPr(firstRun.getPr());
             removeExpression(firstRun, matchStartIndex, matchEndIndex, lastRun, affectedRuns);
             // add replacement run between first and last run

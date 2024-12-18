@@ -122,7 +122,7 @@ public class PowerpointParagraph
     public ProcessorContext processorContext(Placeholder placeholder) {
         var comment = comment(placeholder);
         var firstRun = (R) paragraph.getEGTextRun()
-                                    .getFirst();
+                                    .get(0);
         return new ProcessorContext(this, firstRun, comment, placeholder);
     }
 
@@ -172,7 +172,7 @@ public class PowerpointParagraph
         boolean singleRun = affectedRuns.size() == 1;
 
         List<Object> textRun = this.paragraph.getEGTextRun();
-        replacementRun.setRPr(affectedRuns.getFirst()
+        replacementRun.setRPr(affectedRuns.get(0)
                                           .run()
                                           .getRPr());
         if (singleRun) singleRun(replacement,
@@ -180,15 +180,15 @@ public class PowerpointParagraph
                 matchStartIndex,
                 matchEndIndex,
                 textRun,
-                affectedRuns.getFirst(),
-                affectedRuns.getLast());
+                affectedRuns.get(0),
+                affectedRuns.get(affectedRuns.size() - 1));
         else multipleRuns(replacement,
                 affectedRuns,
                 matchStartIndex,
                 matchEndIndex,
                 textRun,
-                affectedRuns.getFirst(),
-                affectedRuns.getLast());
+                affectedRuns.get(0),
+                affectedRuns.get(affectedRuns.size()-1));
 
     }
 

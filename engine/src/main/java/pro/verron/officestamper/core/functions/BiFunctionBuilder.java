@@ -23,7 +23,7 @@ public class BiFunctionBuilder<T, U>
 
     @Override public void withImplementation(BiFunction<T, U, ?> implementation) {
         Function<List<Object>, Object> function = args -> {
-            var arg0 = class0.cast(args.getFirst());
+            var arg0 = class0.cast(args.get(0));
             var arg1 = class1.cast(args.get(1));
             return implementation.apply(arg0, arg1);
         };

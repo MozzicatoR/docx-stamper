@@ -27,7 +27,7 @@ public class TriFunctionBuilder<T, U, V>
 
     @Override public void withImplementation(TriFunction<T, U, V, ?> implementation) {
         Function<List<Object>, Object> function = args -> {
-            var arg0 = class0.cast(args.getFirst());
+            var arg0 = class0.cast(args.get(0));
             var arg1 = class1.cast(args.get(1));
             var arg2 = class2.cast(args.get(2));
             return implementation.apply(arg0, arg1, arg2);

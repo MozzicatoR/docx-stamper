@@ -113,7 +113,7 @@ public class DocxImageExtractor {
     private static Graphic getInlineGraphic(Drawing drawing) {
         var anchorOrInline = drawing.getAnchorOrInline();
         if (anchorOrInline.isEmpty()) throw new OfficeStamperException("Anchor or Inline is empty !");
-        if (anchorOrInline.getFirst() instanceof Inline inline) return inline.getGraphic();
+        if (anchorOrInline.get(0) instanceof Inline inline) return inline.getGraphic();
         throw new OfficeStamperException("Don't know how to process anchor !");
     }
 

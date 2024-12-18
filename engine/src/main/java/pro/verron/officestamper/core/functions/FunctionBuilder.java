@@ -20,7 +20,7 @@ public class FunctionBuilder<T>
 
     @Override public void withImplementation(Function<T, ?> implementation) {
         Function<List<Object>, Object> objectFunction = args -> {
-            var arg0 = class0.cast(args.getFirst());
+            var arg0 = class0.cast(args.get(0));
             return implementation.apply(arg0);
         };
         var customFunction = new CustomFunction(name, List.of(class0), objectFunction);

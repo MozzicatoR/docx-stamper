@@ -54,29 +54,42 @@ public class RunUtil {
      * @return {@link String} representation of run child
      */
     public static CharSequence getText(Object content) {
-        return switch (content) {
-            case JAXBElement<?> jaxbElement -> getText(jaxbElement.getValue());
-            case Text text -> getText(text);
-            case R.Tab ignored -> "\t";
-            case R.Cr ignored -> "\n";
-            case Br br when br.getType() == null -> "\n";
-            case Br br when br.getType() == STBrType.TEXT_WRAPPING -> "\n";
-            case Br br when br.getType() == STBrType.PAGE -> "\n";
-            case Br br when br.getType() == STBrType.COLUMN -> "\n";
-            case R.NoBreakHyphen ignored -> "‑";
-            case R.SoftHyphen ignored -> "\u00AD";
-            case R.LastRenderedPageBreak ignored -> "";
-            case R.AnnotationRef ignored -> "";
-            case R.CommentReference ignored -> "";
-            case Drawing ignored -> "";
-            case CTFtnEdnRef ref -> ref.getId()
-                                       .toString();
-            case R.Sym sym -> "<sym(%s, %s)>".formatted(sym.getFont(), sym.getChar());
-            default -> {
-                log.debug("Unhandled object type: {}", content.getClass());
-                yield "";
-            }
-        };
+        if (content instanceof JAXBElement<?> jaxbElement) {
+            return getText(jaxbElement.getValue());
+        } else if (content instanceof Text text) {
+            return getText(text);
+        } else if (content instanceof R.Tab) {
+            return "\t";
+        } else if (content instanceof R.Cr) {
+            return "\n";
+        } else if (content instanceof Br br && br.getType() == null) {
+            return "\n";
+        } else if (content instanceof Br br && br.getType() == STBrType.TEXT_WRAPPING) {
+            return "\n";
+        } else if (content instanceof Br br && br.getType() == STBrType.PAGE) {
+            return "\n";
+        } else if (content instanceof Br br && br.getType() == STBrType.COLUMN) {
+            return "\n";
+        } else if (content instanceof R.NoBreakHyphen) {
+            return "‑";
+        } else if (content instanceof R.SoftHyphen) {
+            return "\u00AD";
+        } else if (content instanceof R.LastRenderedPageBreak) {
+            return "";
+        } else if (content instanceof R.AnnotationRef) {
+            return "";
+        } else if (content instanceof R.CommentReference) {
+            return "";
+        } else if (content instanceof Drawing) {
+            return "";
+        } else if (content instanceof CTFtnEdnRef ref) {
+            return ref.getId()
+                    .toString();
+        } else if (content instanceof R.Sym sym) {
+            return "<sym(%s, %s)>".formatted(sym.getFont(), sym.getChar());
+        }
+        log.debug("Unhandled object type: {}", content.getClass());
+        return "";
     }
 
     private static CharSequence getText(Text text) {

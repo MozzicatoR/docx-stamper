@@ -102,14 +102,14 @@ public class RepeatDocPartProcessor
             var repeatElements = comment.getElements();
             var subTemplate = CommentUtil.createSubWordDocument(comment);
             var oddNumberOfBreaks = SectionUtil.hasOddNumberOfSectionBreaks(repeatElements);
-            var sectionBreakInserter = getPreviousSectionBreakIfPresent(repeatElements.getFirst(), gcp)
+            var sectionBreakInserter = getPreviousSectionBreakIfPresent(repeatElements.get(0), gcp)
                     .map(psb -> (UnaryOperator<List<Object>>) objs -> insertSectionBreak(objs, psb, oddNumberOfBreaks))
                     .orElse(UnaryOperator.identity());
             var changes = expressionContexts == null
                     ? nullSupplier.get()
                     : stampSubDocuments(source.document(), expressionContexts, gcp, subTemplate, sectionBreakInserter);
             var gcpContent = gcp.getContent();
-            var index = gcpContent.indexOf(repeatElements.getFirst());
+            var index = gcpContent.indexOf(repeatElements.get(0));
             gcpContent.addAll(index, changes);
             gcpContent.removeAll(repeatElements);
         }
@@ -120,7 +120,7 @@ public class RepeatDocPartProcessor
     ) {
         var inserts = new ArrayList<>(elements);
         if (oddNumberOfBreaks) {
-            if (inserts.getLast() instanceof P p) {
+            if (inserts.get(inserts.size()-1) instanceof P p) {
                 SectionUtil.applySectionBreakToParagraph(previousSectionBreak, p);
             }
             else {

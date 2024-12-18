@@ -20,7 +20,7 @@ public class MergeSameStyleRuns
         var visitor = new SimilarRunVisitor();
         DocumentUtil.visitDocument(document, visitor);
         for (List<R> similarStyleRuns : visitor.getSimilarStyleRuns()) {
-            R firstRun = similarStyleRuns.getFirst();
+            R firstRun = similarStyleRuns.get(0);
             var runContent = firstRun.getContent();
             var firstRunContent = new LinkedHashSet<>(runContent);
             var firstRunParentContent = ((ContentAccessor) firstRun.getParent()).getContent();

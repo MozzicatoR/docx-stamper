@@ -307,7 +307,7 @@ public class DocxStamperConfiguration
     /// resolver list.
     @Override
     public DocxStamperConfiguration addResolver(ObjectResolver resolver) {
-        resolvers.addFirst(resolver);
+        resolvers.add(0, resolver);
         return this;
     }
 
