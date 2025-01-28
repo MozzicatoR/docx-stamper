@@ -13,9 +13,9 @@ import org.docx4j.utils.TraversalUtilVisitor;
 import org.docx4j.wml.*;
 import org.jvnet.jaxb2_commons.ppp.Child;
 import org.springframework.lang.Nullable;
-import org.springframework.util.function.ThrowingFunction;
 import pro.verron.officestamper.api.DocxPart;
 import pro.verron.officestamper.api.OfficeStamperException;
+import pro.verron.officestamper.utils.ThrowingFunction;
 
 import java.util.*;
 import java.util.stream.Stream;

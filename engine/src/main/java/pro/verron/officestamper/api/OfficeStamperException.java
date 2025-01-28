@@ -1,6 +1,7 @@
 package pro.verron.officestamper.api;
 
-import org.springframework.util.function.ThrowingFunction;
+
+import pro.verron.officestamper.utils.ThrowingFunction;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
